@@ -1,5 +1,8 @@
 # Reversi Task 1
+# Alejandro, Tyler, and Victor
 
+# Display ASCII Art welcome screen
+# CITATION!!! ASCII Art taken from: "http://patorjk.com/software/taag/#p=display&h=0&v=0&f=Doom&t=Welcome%0Ato%0AReversi"
 print("""
       _    _      _                       
      | |  | |    | |                     
@@ -24,21 +27,33 @@ print("""
      
 """)
 
+print("   _______________________________________________________________________________________________\n")
+
+# Display brief introduction to Reversi
 # CITATION!!! Reversi game description taken from D2L!
-print('''Reversi is a game for two players, identified here as Heads and Tails. Since Heads always moves first, players should be assigned to either Heads or Tails at random.
+print('''   Game Description:
 
-Reversi is played on a grid of eight (8) columns and eight (8) rows. As a result, there are 64 possible locations on the grid. Each player starts the game with two markers on the grid in the initial configuration depicted in Figure 1.
+     Reversi is a game for two players, identified here as X's and O's.
 
-Starting from the initial configuration (Figure 1), players take turns by placing a marker on the grid such that there exists at least one straight (horizontal, vertical, or diagonal) occupied line between the new marker and another marker belonging to the player, with one or more contiguous markers belonging to the opponent between them. After placing the marker, the player captures all of the opponent's markers on the straight line between the new marker and the other, anchoring marker. Thus, every legal move results in the capture of at least one of the opponents markers, and if a player cannot make a valid move, that player misses a turn.
+     Reversi is played on a grid of eight (8) columns and eight (8) rows.
 
-From the initial configuration, if Tails chooses location d3, the state would correspond to Figure 2, and if Heads then chooses c5, the state would correspond to Figure 3.
+     As a result, there are 64 possible locations on the grid. 
 
-The game ends when neither player can add a marker to the grid - either because the grid is
-full or because no other legal moves exist. When the game has ended, the player with the
-most markers is declared the winner.
+     Each player starts the game with two markers on the grid in the initial configuration depicted below.
+     Starting from the initial configuration players take turns by placing a marker on the grid such that there
+     exists at least one straight (horizontal, vertical, or diagonal) occupied line between the new marker and 
+     another marker belonging to the player, with one or more contiguous markers belonging to the opponent between them.
+     After placing the marker, the player captures all of the opponent's markers on the straight line between the 
+     new marker and the other, anchoring marker. Thus, every legal move results in the capture of at least one of the 
+     opponents markers, and if a player cannot make a valid move, that player misses a turn.
 
+     The game ends when neither player can add a marker to the grid - either because the grid is full or because 
+     no other legal moves exist. When the game has ended, the player with the most markers is declared the winner.
 ''')
 
+print("   _______________________________________________________________________________________________\n")
+
+# Display game board in starting configuration
 print("""            |_A_|_B_|_C_|_D_|_F_|_G_|_H_|_I_|
           1 |___|___|___|___|___|___|___|___|
           2 |___|___|___|___|___|___|___|___|
@@ -51,5 +66,6 @@ print("""            |_A_|_B_|_C_|_D_|_F_|_G_|_H_|_I_|
           
           """)
 
+# Prompt player 1 for a move, then echo the move player 1 chooses back to the screen
 player_1_move = input("Player 1, you are X's, please enter the coordinates of your first move: ")
 print("Player 1 played at: " + player_1_move)
