@@ -1,5 +1,5 @@
 # Reversi Task 1
-# Alejandro, Tyler, and Victor
+# Alejandro, dogsTyler, and Victor
 
 # Display ASCII Art welcome screen
 # CITATION!!! ASCII Art taken from: "http://patorjk.com/software/taag/#p=display&h=0&v=0&f=Doom&t=Welcome%0Ato%0AReversi"
