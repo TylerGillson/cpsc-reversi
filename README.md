@@ -1,1 +1,1 @@
-# cpsc-reversi
+CPSC - Reversi Code Repository
