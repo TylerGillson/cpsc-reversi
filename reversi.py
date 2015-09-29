@@ -1,8 +1,12 @@
 # Reversi Task 1
-# Alejandro, Tyler, and Victor
 
-# Display ASCII Art welcome screen
-# CITATION!!! ASCII Art taken from: "http://patorjk.com/software/taag/#p=display&h=0&v=0&f=Doom&t=Welcome%0Ato%0AReversi"
+# Import relevent modules #
+import turtle
+import math
+import random
+
+# http://patorjk.com/software/taag/#p=display&f=Doom&t=welcome%0Ato%0Areversi #
+
 print("""
       _    _      _                       
      | |  | |    | |                     
@@ -24,48 +28,126 @@ print("""
      |   // _ \ \ / / _ \ '__/ __|  |
      | |\ \  __/\ V /  __/ |  \__ \ |
      \_| \_\___| \_/ \___|_|  |___/_|
-     
 """)
 
-print("   _______________________________________________________________________________________________\n")
+print('   _____________________________________________________________________________________\n')
 
-# Display brief introduction to Reversi
 # CITATION!!! Reversi game description taken from D2L!
-print('''   Game Description:
+print('''   Reversi is a game for two players, played on a grid of eight columns and eight rows. 
+   
+   As a result, there are 64 possible locations on the grid. 
+   
+   Starting from the initial configuration, players take turns by placing a marker on the grid 
+   such that there exists at least one straight (horizontal, vertical, or diagonal) occupied line
+   between the new marker and another marker belonging to the player, with one or more contiguous 
+   markers belonging to the opponent between them. 
+   
+   After placing the marker, the player captures all of the opponent's markers on the straight 
+   line between the new marker and the other, anchoring marker.
+   
+   Thus, every legal move results in the capture of at least one of the opponents markers, and 
+   if a player cannot make a valid move, that player misses a turn.
+   
+   The game ends when neither player can add a marker to the grid - either because the grid is 
+   full or because no other legal moves exist.
+   
+   When the game has ended, the player with the most markers is declared the winner.
+   ''')
+   
+print('   _____________________________________________________________________________________\n')
 
-     Reversi is a game for two players, identified here as X's and O's.
+board = turtle.Turtle()
+wn = turtle.Screen()
+turtle.setworldcoordinates(-402,-402,402,402)
+wn.bgcolor("Green")
+board.ht()
+board.speed(0)
+board.pensize(4)
+board.pencolor("black")
+board.up()
+board.goto(-300,-402)
 
-     Reversi is played on a grid of eight (8) columns and eight (8) rows.
+X=0
+Y=1
+LEFT=2
+RIGHT=3
+FORWARD=4
 
-     As a result, there are 64 possible locations on the grid. 
+coordinate = [[-300,-402,90,None,804],
+              [-200,-402,None,None,804],
+              [-100,-402,None,None,804],
+              [0,-402,None,None,804],
+              [100,-402,None,None,804],
+              [200,-402,None,None,804],
+              [300,-402,None,None,804],
+              [-402,-300,None,90,804],
+              [-402,-200,None,None,804],
+              [-402,-100,None,None,804],
+              [-402,0,None,None,804],
+              [-402,100,None,None,804],
+              [-402,200,None,None,804],
+              [-402,300,None,None,804]]
 
-     Each player starts the game with two markers on the grid in the initial configuration depicted below.
-     Starting from the initial configuration players take turns by placing a marker on the grid such that there
-     exists at least one straight (horizontal, vertical, or diagonal) occupied line between the new marker and 
-     another marker belonging to the player, with one or more contiguous markers belonging to the opponent between them.
-     After placing the marker, the player captures all of the opponent's markers on the straight line between the 
-     new marker and the other, anchoring marker. Thus, every legal move results in the capture of at least one of the 
-     opponents markers, and if a player cannot make a valid move, that player misses a turn.
+for i in range(14):
+    board.up()
+    board.goto(coordinate[i][X],coordinate[i][Y])
+    if coordinate[i][LEFT] is not None:
+        board.left(coordinate[i][LEFT])
+    if coordinate[i][RIGHT] is not None:
+        board.right(coordinate[i][RIGHT])
+    board.down()
+    if coordinate[i][FORWARD] is not None:
+        board.forward(coordinate[i][FORWARD])
 
-     The game ends when neither player can add a marker to the grid - either because the grid is full or because 
-     no other legal moves exist. When the game has ended, the player with the most markers is declared the winner.
-''')
+board.up()
+board.pensize(5)
+board.pencolor("brown")
+board.goto(-402,-402)
+board.down()
 
-print("   _______________________________________________________________________________________________\n")
+for i in range(4):
+    board.forward(804)
+    board.left(90)
 
-# Display game board in starting configuration
-print("""            |_A_|_B_|_C_|_D_|_F_|_G_|_H_|_I_|
-          1 |___|___|___|___|___|___|___|___|
-          2 |___|___|___|___|___|___|___|___|
-          3 |___|___|___|___|___|___|___|___|
-          4 |___|___|___|_X_|_O_|___|___|___|
-          5 |___|___|___|_O_|_X_|___|___|___|
-          6 |___|___|___|___|___|___|___|___|
-          7 |___|___|___|___|___|___|___|___|
-          8 |___|___|___|___|___|___|___|___|
-          
-          """)
+player_1_score = turtle.Turtle()
+player_2_score = turtle.Turtle()
+player_1_score.ht()
+player_2_score.ht()
+player_1_score.up()
+player_2_score.up()
+player_1_score.goto(-200,-435)
+player_2_score.goto(200,-435)
 
-# Prompt player 1 for a move, then echo the move player 1 chooses back to the screen
-player_1_move = input("Player 1, you are X's, please enter the coordinates of your first move: ")
+def circle(turtle,radius):    
+    for i in range(36):
+        # Move by 1/360 circumference
+        turtle.forward((2*math.pi*radius/360)*10)
+        turtle.left(10)
+    return 
+
+def printTile(xcord,ycord,pen_color,fill_color):
+    tile = turtle.Turtle()
+    tile.ht()
+    tile.speed(0)
+    tile.up()
+    tile.goto(xcord,ycord)
+    tile.down()
+    tile.begin_fill()
+    tile.pencolor(pen_color)
+    tile.fillcolor(fill_color)
+    circle(tile,50)
+    tile.end_fill()
+    return
+    
+printTile(-50,0,'white','black')
+printTile(50,-100,'white','black')
+printTile(-50,-100,'black','white')
+printTile(50,0,'black','white')
+
+player_1_score.write('Player 1 has: ' + str(2) + ' Tiles', move=False, align="center", font=("Arial", 12, "bold"))
+player_2_score.write('Player 2 has: ' + str(2) + ' Tiles', move=False, align="center", font=("Arial", 12, "bold"))
+
+player_1_move = input("Player 1, you are black, please enter the coordinates of your first move: ")
 print("Player 1 played at: " + player_1_move)
+
+wn.exitonclick()
