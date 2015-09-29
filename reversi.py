@@ -64,81 +64,40 @@ board.ht()
 board.speed(0)
 board.pensize(4)
 board.pencolor("black")
+board.up()
+board.goto(-300,-402)
+
+X=0
+Y=1
+LEFT=2
+RIGHT=3
+FORWARD=4
+
+coordinate = [[-300,-402,90,None,804],
+              [-200,-402,None,None,804],
+              [-100,-402,None,None,804],
+              [0,-402,None,None,804],
+              [100,-402,None,None,804],
+              [200,-402,None,None,804],
+              [300,-402,None,None,804],
+              [-402,-300,None,90,804],
+              [-402,-200,None,None,804],
+              [-402,-100,None,None,804],
+              [-402,0,None,None,804],
+              [-402,100,None,None,804],
+              [-402,200,None,None,804],
+              [-402,300,None,None,804]]
 
 for i in range(14):
-    if i == 0:
-        board.up()
-        board.goto(-300,-402)
-        board.left(90)
-        board.down()
-        board.forward(804)
-    if i == 1:
-        board.up()
-        board.goto(-200,-402)
-        board.down()
-        board.forward(804)
-    if i == 2:
-        board.up()
-        board.goto(-100,-402)
-        board.down()
-        board.forward(804)
-    if i == 3:
-        board.up()
-        board.goto(-0,-402)
-        board.down()
-        board.forward(804)
-    if i == 4:
-        board.up()
-        board.goto(100,-402)
-        board.down()
-        board.forward(804)
-    if i == 5:
-        board.up()
-        board.goto(200,-402)
-        board.down()
-        board.forward(804)
-    if i == 6:
-        board.up()
-        board.goto(300,-402)
-        board.down()
-        board.forward(804)
-    if i == 7:
-        board.up()
-        board.goto(-402,-300)
-        board.right(90)
-        board.down()
-        board.forward(804)
-    if i == 8:
-        board.up()
-        board.goto(-402,-200)
-        board.down()
-        board.forward(804)
-    if i == 9:
-        board.up()
-        board.goto(-402,-100)
-        board.down()
-        board.forward(804)
-    if i == 10:
-        board.up()
-        board.goto(-402,0)
-        board.down()
-        board.forward(804)
-    if i == 11:
-        board.up()
-        board.goto(-402,100)
-        board.down()
-        board.forward(804)
-    if i == 12:
-        board.up()
-        board.goto(-402,200)
-        board.down()
-        board.forward(804)
-    if i == 13:
-        board.up()
-        board.goto(-402,300)
-        board.down()
-        board.forward(804)
-        
+    board.up()
+    board.goto(coordinate[i][X],coordinate[i][Y])
+    if coordinate[i][LEFT] is not None:
+        board.left(coordinate[i][LEFT])
+    if coordinate[i][RIGHT] is not None:
+        board.right(coordinate[i][RIGHT])
+    board.down()
+    if coordinate[i][FORWARD] is not None:
+        board.forward(coordinate[i][FORWARD])
 
 board.up()
 board.pensize(5)
@@ -149,6 +108,15 @@ board.down()
 for i in range(4):
     board.forward(804)
     board.left(90)
+
+player_1_score = turtle.Turtle()
+player_2_score = turtle.Turtle()
+player_1_score.ht()
+player_2_score.ht()
+player_1_score.up()
+player_2_score.up()
+player_1_score.goto(-200,-435)
+player_2_score.goto(200,-435)
 
 def circle(turtle,radius):    
     for i in range(36):
@@ -175,6 +143,9 @@ printTile(-50,0,'white','black')
 printTile(50,-100,'white','black')
 printTile(-50,-100,'black','white')
 printTile(50,0,'black','white')
+
+player_1_score.write('Player 1 has: ' + str(2) + ' Tiles', move=False, align="center", font=("Arial", 12, "bold"))
+player_2_score.write('Player 2 has: ' + str(2) + ' Tiles', move=False, align="center", font=("Arial", 12, "bold"))
 
 player_1_move = input("Player 1, you are black, please enter the coordinates of your first move: ")
 print("Player 1 played at: " + player_1_move)
