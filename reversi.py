@@ -150,4 +150,8 @@ player_2_score.write('Player 2 has: ' + str(2) + ' Tiles', move=False, align="ce
 player_1_move = input("Player 1, you are black, please enter the coordinates of your first move: ")
 print("Player 1 played at: " + player_1_move)
 
+<<<<<<< HEAD
 wn.exitonclick()
+=======
+wn.exitonclick()
+>>>>>>> 023b9cf9bf5cf56c1c269cf486fdc2397ffa570b
