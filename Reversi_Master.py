@@ -93,17 +93,18 @@ def init_board():
 		  [-400,100,None,None,800],
 		  [-400,200,None,None,800],
 		  [-400,300,None,None,800]]
-
+		  
     for i in range(14):
         X=0
         Y=1
         LEFT=2
         RIGHT=3
-	FORWARD=4
+        FORWARD=4
 		
-	board.up()
-	board.goto(coordinate[i][X],coordinate[i][Y])
-	if coordinate[i][LEFT] is not None:
+		
+    board.up()
+    board.goto(coordinate[i][X],coordinate[i][Y])
+    if coordinate[i][LEFT] is not None:
 	    board.left(coordinate[i][LEFT])
 	if coordinate[i][RIGHT] is not None:
 	    board.right(coordinate[i][RIGHT])
