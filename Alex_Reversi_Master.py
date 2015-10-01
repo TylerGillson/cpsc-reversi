@@ -8,9 +8,10 @@ import string
 
 #This function will draw the game's welcome screen. When the player clicks on the screen, it will exit, running the next function
 def welcome():
-    
+    #The window that will draw the welcome screen components
     welcome_window = turtle.Screen()
     welcome_window.bgcolor("Green")
+
     #separating drawing functionality into different turtle objects for clarity (plus easier to debug)
 
     #Turtle to display the title screen
@@ -93,14 +94,13 @@ def init_board():
 		  [-400,100,None,None,800],
 		  [-400,200,None,None,800],
 		  [-400,300,None,None,800]]
-		  
+
     for i in range(14):
         X=0
         Y=1
         LEFT=2
         RIGHT=3
         FORWARD=4
-<<<<<<< HEAD
 		
         board.up()
         board.goto(coordinate[i][X],coordinate[i][Y])
@@ -111,19 +111,6 @@ def init_board():
             board.down()
         if coordinate[i][FORWARD] is not None:
             board.forward(coordinate[i][FORWARD])
-=======
-		
-		
-    board.up()
-    board.goto(coordinate[i][X],coordinate[i][Y])
-    if coordinate[i][LEFT] is not None:
-	    board.left(coordinate[i][LEFT])
-	if coordinate[i][RIGHT] is not None:
-	    board.right(coordinate[i][RIGHT])
-	    board.down()
-	if coordinate[i][FORWARD] is not None:
-	    board.forward(coordinate[i][FORWARD])
->>>>>>> bf900ec5d76cd6bbf42fff8313100a4ac5d40b27
             
         label = [[-420,-360,8],
 		 [-420,-260,7],
@@ -193,7 +180,7 @@ def printTile(cell,pen_color,fill_color):
     ycord = int(str.split(getCellCords(cell),',')[1]) + 4
     state = fill_color
     
-#    updateCellState(cell,state)
+    #updateCellState(cell,state)
     
     tile = turtle.Turtle()
     tile.ht()
@@ -212,47 +199,47 @@ def init_constants():
     # letter, number, xcord, ycord, state
     #cells = [['A',1,-400,400,empty/white/black]]
 
-    #http://stackoverflow.com/questions/16060899/alphabet-range-python
+    #CITATION: http://stackoverflow.com/questions/16060899/alphabet-range-python
     letters = list(map(chr, range(ord('A'), ord('H')+1)))
 
     global cells 
     cells = []
     for letters in letters:
-       state = 'empty'
-       if letters == 'A':
-           xcord = -400
-       if letters == 'B':
-           xcord = -300
-       if letters == 'C':
-           xcord = -200
-       if letters == 'D':
-           xcord = -100
-       if letters == 'E':
-           xcord = 0
-       if letters == 'F':
-           xcord = 100
-       if letters == 'G':
-           xcord = 200
-       if letters == 'H':
-           xcord = 300
-       for i in range(1,9):
-           if i == 1:
-               ycord = 300
-           if i == 2:
-               ycord = 200
-           if i == 3:
-               ycord = 100
-           if i == 4:
-               ycord = 0
-           if i == 5:
-               ycord = -100
-           if i == 6:
-               ycord = -200
-           if i == 7:
-               ycord = -300
-           if i == 8:
-               ycord = -400
-           cells.append([letters,i,xcord,ycord,state])
+        state = 'empty'
+        if letters == 'A':
+            xcord = -400
+        if letters == 'B':
+            xcord = -300
+        if letters == 'C':
+            xcord = -200
+        if letters == 'D':
+            xcord = -100
+        if letters == 'E':
+            xcord = 0
+        if letters == 'F':
+            xcord = 100
+        if letters == 'G':
+            xcord = 200
+        if letters == 'H':
+            xcord = 300
+    for i in range(1,9):
+        if i == 1:
+            ycord = 300
+        if i == 2:
+            ycord = 200
+        if i == 3:
+            ycord = 100
+        if i == 4:
+            ycord = 0
+        if i == 5:
+            ycord = -100
+        if i == 6:
+            ycord = -200
+        if i == 7:
+            ycord = -300
+        if i == 8:
+            ycord = -400
+        cells.append([letters,i,xcord,ycord,state])
 
 def getCellCords(cell):
     for i in range(64):
