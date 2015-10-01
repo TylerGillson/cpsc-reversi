@@ -17,17 +17,15 @@ def welcome():
     title_screen_turtle = turtle.Turtle()
     title_screen_turtle.ht()
     title_screen_turtle.penup()
-    title_screen_turtle.left(90)
-    title_screen_turtle.forward(250)
+    title_screen_turtle.goto(0,200)
     title_screen_turtle.write("Welcome to Reversi!", move = False, align = "center", font = ("stencil", 50, "bold"))
 
     #Turtle to display the description
     description_turtle = turtle.Turtle()
     description_turtle.ht()
     description_turtle.penup()
-    description_turtle.right(90)
-    description_turtle.forward(200)
-        
+    description_turtle.goto(0,-200)
+
     #CITATION: Game description was taken from d2l game description(modified only a little bit)
     description_turtle.write('''
     ___________________________________________________________________________
@@ -55,14 +53,13 @@ def welcome():
     When the game has ended, the player with the most markers is declared the winner.
     ________________________________________________________________________
 
-    ''', move = False, align = "center", font = ("cornerstone", 11, "normal"))
+    ''', move = False, align = "center", font = ("cornerstone", 12, "normal"))
         
     #turtle that draws a 'click anywhere to start' message
     click_turtle = turtle.Turtle()
     click_turtle.ht()
     click_turtle.penup()
-    click_turtle.right(90)
-    click_turtle.forward(300)
+    click_turtle.goto(0,-250)
     click_turtle.pencolor("white")
     click_turtle.write("Click anywhere to start!", move = False, align = "center", font = ("stencil", 40, "bold"))
 
@@ -80,54 +77,53 @@ def init_board():
     board.pencolor('black')
 
     coordinate = [[-300,-400,90,None,800],
-		  [-200,-400,None,None,800],
-		  [-100,-400,None,None,800],
-		  [0,-400,None,None,800],
-		  [100,-400,None,None,800],
-		  [200,-400,None,None,800],
-		  [300,-400,None,None,800],
-		  [-400,-300,None,90,800],
-		  [-400,-200,None,None,800],
-		  [-400,-100,None,None,800],
-		  [-400,0,None,None,800],
-		  [-400,100,None,None,800],
-		  [-400,200,None,None,800],
-		  [-400,300,None,None,800]]
-		  
+                  [-200,-400,None,None,800],
+                  [-100,-400,None,None,800],
+                  [0,-400,None,None,800],
+                  [100,-400,None,None,800],
+                  [200,-400,None,None,800],
+                  [300,-400,None,None,800],
+                  [-400,-300,None,90,800],
+                  [-400,-200,None,None,800],
+                  [-400,-100,None,None,800],
+                  [-400,0,None,None,800],
+                  [-400,100,None,None,800],
+                  [-400,200,None,None,800],
+                  [-400,300,None,None,800]]
+          
     for i in range(14):
         X=0
         Y=1
         LEFT=2
         RIGHT=3
         FORWARD=4
-		
-		
-    board.up()
-    board.goto(coordinate[i][X],coordinate[i][Y])
-    if coordinate[i][LEFT] is not None:
-	    board.left(coordinate[i][LEFT])
-	if coordinate[i][RIGHT] is not None:
-	    board.right(coordinate[i][RIGHT])
-	    board.down()
-	if coordinate[i][FORWARD] is not None:
-	    board.forward(coordinate[i][FORWARD])
+        
+        board.up()
+        board.goto(coordinate[i][X],coordinate[i][Y])
+        if coordinate[i][LEFT] is not None:
+            board.left(coordinate[i][LEFT])
+        if coordinate[i][RIGHT] is not None:
+            board.right(coordinate[i][RIGHT])
+        board.down()
+        if coordinate[i][FORWARD] is not None:
+            board.forward(coordinate[i][FORWARD])
             
-	label = [[-420,-360,8],
-		 [-420,-260,7],
-		 [-420,-160,6],
-		 [-420,-60,5],
-		 [-420,40,4],
-		 [-420,140,3],
-		 [-420,240,2],
-		 [-420,340,1],
-		 [-350,415,'A'],
-		 [-250,415,'B'],
-		 [-150,415,'C'],
-		 [-50,415,'D'],
-		 [50,415,'E'],
-		 [150,415,'F'],
-		 [250,415,'G'],
-		 [350,415,'H']]
+    label = [[-420,-360,8],
+             [-420,-260,7],
+             [-420,-160,6],
+             [-420,-60,5],
+             [-420,40,4],
+             [-420,140,3],
+             [-420,240,2],
+             [-420,340,1],
+             [-350,415,'A'],
+             [-250,415,'B'],
+             [-150,415,'C'],
+             [-50,415,'D'],
+             [50,415,'E'],
+             [150,415,'F'],
+             [250,415,'G'],
+             [350,415,'H']]
 
     board.up()
     board.pensize(5)
@@ -137,19 +133,19 @@ def init_board():
 
     for i in range(4):
         board.forward(800)
-	board.left(90)
+        board.left(90)
 
-	board_definition = turtle.Turtle()
-	board_definition.ht()
+    board_definition = turtle.Turtle()
+    board_definition.ht()
 
     for i in range(16):
-	X=0
+        X=0
         Y=1
-    	WRITE=2
+        WRITE=2
 
-    board_definition.up()
-    board_definition.goto(label[i][X],label[i][Y])
-    board_definition.write(label[i][WRITE], move=False, align="center", font=("Arial", 18, "bold"))
+        board_definition.up()
+        board_definition.goto(label[i][X],label[i][Y])
+        board_definition.write(label[i][WRITE], move=False, align="center", font=("Arial", 18, "bold"))
 
     player_1_score = turtle.Turtle()
     player_2_score = turtle.Turtle()
@@ -168,7 +164,7 @@ def init_board():
     player_1_score.write('Player 1 has: ' + str(2) + ' Tiles', move=False, align="center", font=("Arial", 12, "bold"))
     player_2_score.write('Player 2 has: ' + str(2) + ' Tiles', move=False, align="center", font=("Arial", 12, "bold"))
 
-def circle(turtle,radius):    
+def circle(turtle,radius):
     for i in range(36):
         # Move by 1/360 circumference
         turtle.forward((2*math.pi*radius/360)*10)
