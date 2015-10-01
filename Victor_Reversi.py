@@ -100,18 +100,6 @@ def init_board():
         LEFT=2
         RIGHT=3
         FORWARD=4
-<<<<<<< HEAD
-		
-        board.up()
-        board.goto(coordinate[i][X],coordinate[i][Y])
-        if coordinate[i][LEFT] is not None:
-            board.left(coordinate[i][LEFT])
-        if coordinate[i][RIGHT] is not None:
-            board.right(coordinate[i][RIGHT])
-            board.down()
-        if coordinate[i][FORWARD] is not None:
-            board.forward(coordinate[i][FORWARD])
-=======
 		
 		
     board.up()
@@ -123,9 +111,8 @@ def init_board():
 	    board.down()
 	if coordinate[i][FORWARD] is not None:
 	    board.forward(coordinate[i][FORWARD])
->>>>>>> bf900ec5d76cd6bbf42fff8313100a4ac5d40b27
             
-        label = [[-420,-360,8],
+	label = [[-420,-360,8],
 		 [-420,-260,7],
 		 [-420,-160,6],
 		 [-420,-60,5],
@@ -150,15 +137,15 @@ def init_board():
 
     for i in range(4):
         board.forward(800)
-        board.left(90)
+	board.left(90)
 
-        board_definition = turtle.Turtle()
-        board_definition.ht()
+	board_definition = turtle.Turtle()
+	board_definition.ht()
 
     for i in range(16):
-        X=0
+	X=0
         Y=1
-        WRITE=2
+    	WRITE=2
 
     board_definition.up()
     board_definition.goto(label[i][X],label[i][Y])
@@ -285,3 +272,4 @@ if player_1_move == 'E3':
 
 # prompt player 2 to move simply to keep the turtle window open...
 player_2_move = input('Player 2, you are White, please enter the coordinates of your first move: ')
+
