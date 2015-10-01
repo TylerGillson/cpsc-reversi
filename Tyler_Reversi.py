@@ -6,6 +6,14 @@ import math
 import random
 import string
 
+# Define constants for drawing the board #
+screen_y = 800
+screen_x = 800
+cell_x = 100
+cell_y = 100
+num_columns = 8
+num_rows = 8
+
 # This function will draw the game's welcome screen. When the player clicks on the screen, it will exit, running the next function #
 def welcome():
     
@@ -17,7 +25,7 @@ def welcome():
     title_screen_turtle = turtle.Turtle()
     title_screen_turtle.ht()
     title_screen_turtle.penup()
-    title_screen_turtle.goto(0,200)
+    title_screen_turtle.goto(0,300)
     title_screen_turtle.write("Welcome to Reversi!", move = False, align = "center", font = ("stencil", 50, "bold"))
 
     # Turtle to display the description #
@@ -59,7 +67,7 @@ def welcome():
     click_turtle = turtle.Turtle()
     click_turtle.ht()
     click_turtle.penup()
-    click_turtle.goto(0,-250)
+    click_turtle.goto(0,-300)
     click_turtle.pencolor("white")
     click_turtle.write("Click anywhere to start!", move = False, align = "center", font = ("stencil", 40, "bold"))
 
@@ -70,7 +78,7 @@ def welcome():
 def init_board():
     # Create a turtle object for the screen and configure it's settings #
     wn = turtle.Screen()
-    turtle.setworldcoordinates(-400,-400,400,400)
+    turtle.setworldcoordinates(-(screen_x/2),-(screen_y/2),(screen_x/2),(screen_y/2))
     wn.bgcolor('green')
     
     # Create a turtle object for drawing the board and configure it's settings #
@@ -82,42 +90,42 @@ def init_board():
 
     # Create a 2D list containing turtle instructions for drawing 7 vertical lines & 7 horizontal lines. Formatted as follows: #
     # xcord, ycord, left, right, forward #
-    coordinate = [[-300,-400,90,None,800],
-                  [-200,-400,None,None,800],
-                  [-100,-400,None,None,800],
-                  [0,-400,None,None,800],
-                  [100,-400,None,None,800],
-                  [200,-400,None,None,800],
-                  [300,-400,None,None,800],
-                  [-400,-300,None,90,800],
-                  [-400,-200,None,None,800],
-                  [-400,-100,None,None,800],
-                  [-400,0,None,None,800],
-                  [-400,100,None,None,800],
-                  [-400,200,None,None,800],
-                  [-400,300,None,None,800]]
+    coordinate = [[(-(screen_x/2) + cell_x),-(screen_y/2),90,None,screen_y],
+                  [-(screen_x/4),-(screen_y/2),None,None,screen_y],
+                  [-cell_x,-(screen_y/2),None,None,screen_y],
+                  [0,-(screen_y/2),None,None,screen_y],
+                  [cell_x,-(screen_y/2),None,None,screen_y],
+                  [(screen_x/4),-(screen_y/2),None,None,screen_y],
+                  [(screen_x/2) - cell_x,-(screen_y/2),None,None,screen_y],
+                  [-(screen_x/2),-(screen_y/2) + cell_y,None,90,screen_x],
+                  [-(screen_x/2),-(screen_y/4),None,None,screen_x],
+                  [-(screen_x/2),-cell_y,None,None,screen_x],
+                  [-(screen_x/2),0,None,None,screen_x],
+                  [-(screen_x/2),cell_y,None,None,screen_x],
+                  [-(screen_x/2),(screen_y/4),None,None,screen_x],
+                  [-(screen_x/2),(screen_y/2) - cell_y,None,None,screen_x]]
 
     # Iterate drawing instructions 14 times (once for each line being drawn) #
     for i in range(14):
         # Instantiate constants in order to make instructions more readable #
-        X=0
-        Y=1
-        LEFT=2
-        RIGHT=3
-        FORWARD=4
+        TURTLE_X=0
+        TURTLE_Y=1
+        TURTLE_LEFT=2
+        TURTLE_RIGHT=3
+        TURTLE_FORWARD=4
         
         # Begin instructing turtle using if statements in order to account for each line's particular orientation / location #
         board.up()
-        board.goto(coordinate[i][X],coordinate[i][Y])
+        board.goto(coordinate[i][TURTLE_X],coordinate[i][TURTLE_Y])
         # Turn turtle left 90 degrees on first iteration #
-        if coordinate[i][LEFT] is not None:
-            board.left(coordinate[i][LEFT])
+        if coordinate[i][TURTLE_LEFT] is not None:
+            board.left(coordinate[i][TURTLE_LEFT])
         # Turn turtle right 90 degrees on eighth iteration #
-        if coordinate[i][RIGHT] is not None:
-            board.right(coordinate[i][RIGHT])
+        if coordinate[i][TURTLE_RIGHT] is not None:
+            board.right(coordinate[i][TURTLE_RIGHT])
         board.down()
-        if coordinate[i][FORWARD] is not None:
-            board.forward(coordinate[i][FORWARD])
+        if coordinate[i][TURTLE_FORWARD] is not None:
+            board.forward(coordinate[i][TURTLE_FORWARD])
 
     # Reconfigure the board drawing turtle for drawing the border #
     board.up()
@@ -127,8 +135,10 @@ def init_board():
     board.down()
 
     # Draw the border #
-    for i in range(4):
-        board.forward(800)
+    for i in range(2):
+        board.forward(screen_x)
+        board.left(90)
+        board.forward(screen_y)
         board.left(90)
 
     # Create 2D list containing coordinates & values for writing the grid labels #
@@ -283,7 +293,7 @@ def updateCellState(cell,state):
             del cells[i][4]
             cells.insert([i],[state])
 
-# Run three main functions #
+# Display welcome screen, then initialize the board & all constants etc. #
 welcome()
 init_constants()
 init_board()
@@ -297,7 +307,7 @@ print('Player 1 played at: ' + player_1_move)
 # Draw a piece wherever player 1 picked #
 printTile(player_1_move,'white','black')
 
-# CHEAT block to accomplish Task #2
+# Temporary code block to accomplish Task #2
 if player_1_move == 'C5':
     printTile('D5','white','black')
 if player_1_move == 'D6':
