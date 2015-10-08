@@ -1,18 +1,10 @@
-# Reversi Task 2 #
+# Reversi Task 3 #
 
 # Import relevant modules #
 import turtle
 import math
 import random
 import string
-
-# Define constants for drawing the board #
-screen_y = 800
-screen_x = 800
-cell_x = 100
-cell_y = 100
-num_columns = 8
-num_rows = 8
 
 # This function will draw the game's welcome screen. When the player clicks on the screen, it will exit, running the next function #
 def welcome():
@@ -76,9 +68,9 @@ def welcome():
 
 # This function will draw the game board #
 def init_board():
+
     # Create a turtle object for the screen and configure it's settings #
     wn = turtle.Screen()
-    turtle.setworldcoordinates(-(screen_x/2),-(screen_y/2),(screen_x/2),(screen_y/2))
     wn.bgcolor('green')
     
     # Create a turtle object for drawing the board and configure it's settings #
@@ -88,128 +80,105 @@ def init_board():
     board.pensize(4)
     board.pencolor('black')
 
-    # Create a 2D list containing turtle instructions for drawing 7 vertical lines & 7 horizontal lines. Formatted as follows: #
-    # xcord, ycord, left, right, forward #
-    coordinate = [[(-(screen_x/2) + cell_x),-(screen_y/2),90,None,screen_y],
-                  [-(screen_x/4),-(screen_y/2),None,None,screen_y],
-                  [-cell_x,-(screen_y/2),None,None,screen_y],
-                  [0,-(screen_y/2),None,None,screen_y],
-                  [cell_x,-(screen_y/2),None,None,screen_y],
-                  [(screen_x/4),-(screen_y/2),None,None,screen_y],
-                  [(screen_x/2) - cell_x,-(screen_y/2),None,None,screen_y],
-                  [-(screen_x/2),-(screen_y/2) + cell_y,None,90,screen_x],
-                  [-(screen_x/2),-(screen_y/4),None,None,screen_x],
-                  [-(screen_x/2),-cell_y,None,None,screen_x],
-                  [-(screen_x/2),0,None,None,screen_x],
-                  [-(screen_x/2),cell_y,None,None,screen_x],
-                  [-(screen_x/2),(screen_y/4),None,None,screen_x],
-                  [-(screen_x/2),(screen_y/2) - cell_y,None,None,screen_x]]
-
-    # Iterate drawing instructions 14 times (once for each line being drawn) #
-    for i in range(14):
-        # Instantiate constants in order to make instructions more readable #
-        TURTLE_X=0
-        TURTLE_Y=1
-        TURTLE_LEFT=2
-        TURTLE_RIGHT=3
-        TURTLE_FORWARD=4
-        
-        # Begin instructing turtle using if statements in order to account for each line's particular orientation / location #
+    #These two functions uses the constants to draw the cells (excluding the outline)
+    for i in range(num_rows-1):
+        additive_int = i+1
         board.up()
-        board.goto(coordinate[i][TURTLE_X],coordinate[i][TURTLE_Y])
-        # Turn turtle left 90 degrees on first iteration #
-        if coordinate[i][TURTLE_LEFT] is not None:
-            board.left(coordinate[i][TURTLE_LEFT])
-        # Turn turtle right 90 degrees on eighth iteration #
-        if coordinate[i][TURTLE_RIGHT] is not None:
-            board.right(coordinate[i][TURTLE_RIGHT])
+        board.goto(origin_x,origin_y-(size_of_cell_y*additive_int))
         board.down()
-        if coordinate[i][TURTLE_FORWARD] is not None:
-            board.forward(coordinate[i][TURTLE_FORWARD])
+        board.forward(size_of_cell_x*num_rows)
+
+    board.right(90)
+    
+    for i in range(num_columns-1):
+        additive_int = i+1
+        board.up()
+        board.goto(origin_x+(size_of_cell_x*additive_int), origin_y)
+        board.down()
+        board.forward(size_of_cell_y*num_columns)
 
     # Reconfigure the board drawing turtle for drawing the border #
     board.up()
     board.pensize(5)
     board.pencolor('brown')
-    board.goto(-400,-400)
+    board.goto(origin_x,origin_y)
     board.down()
 
     # Draw the border #
     for i in range(2):
-        board.forward(screen_x)
+        board.forward(size_of_cell_x*num_rows)
         board.left(90)
-        board.forward(screen_y)
+        board.forward(size_of_cell_y*num_columns)
         board.left(90)
-
-    # Create 2D list containing coordinates & values for writing the grid labels #
-    label = [[-420,-360,8],
-             [-420,-260,7],
-             [-420,-160,6],
-             [-420,-60,5],
-             [-420,40,4],
-             [-420,140,3],
-             [-420,240,2],
-             [-420,340,1],
-             [-350,415,'A'],
-             [-250,415,'B'],
-             [-150,415,'C'],
-             [-50,415,'D'],
-             [50,415,'E'],
-             [150,415,'F'],
-             [250,415,'G'],
-             [350,415,'H']]
 
     # Create a new turtle object for writing board labels #
     board_definition = turtle.Turtle()
     board_definition.ht()
-
-    # Iterate labelling instructions 16 times (once for each label) #
-    for i in range(16):
-        # Instantiate constants to make labelling instructions more readable #
-        X=0
-        Y=1
-        WRITE=2
-        
-        # Instruct labelling turtle #
-        board_definition.up()
-        board_definition.goto(label[i][X],label[i][Y])
-        board_definition.write(label[i][WRITE], move=False, align="center", font=("Arial", 18, "bold"))
-
-    # Create globally available turtles for displaying the running piece total for each player, then put them in position #
-    global player_1_score
-    global player_2_score
-    player_1_score = turtle.Turtle()
-    player_2_score = turtle.Turtle()
-    player_1_score.ht()
-    player_2_score.ht()
-    player_1_score.up()
-    player_2_score.up()
-    player_1_score.goto(-200,-435)
-    player_2_score.goto(200,-435)
+    board_definition.up()
+    
+    #These two for loops draw the labels (1, 2, 3, 4.... / A, B, C, D....)
+    for i in range(num_rows):
+        str_to_write = str(i+1)
+        board_definition.goto(origin_x - (size_of_cell_x/2), origin_y - ((2*i+1)*size_of_cell_y/2) -  (size_of_cell_y/8))
+        board_definition.write(str_to_write, move=False, align="center", font=("Arial", 18, "bold"))
+    
+    for i in range(num_columns):
+        str_to_write = alphabet[i]
+        board_definition.goto(origin_x + ((2*i+1)*size_of_cell_x/2), origin_y + (size_of_cell_y/3))
+        board_definition.write(str_to_write, move=False, align="center", font=("Arial", 18, "bold"))
 
     # Draw the initial four pieces using the printTile function #
     printTile('D4','white','black')
     printTile('E5','white','black')
     printTile('E4','black','white')
     printTile('D5','black','white')
+        
+def update_Scores(player_1_Score, player_2_Score):
+    # Initialize turtle and places them under the board#
+    player_1_turtle = turtle.Turtle()
+    player_1_turtle.up()
+    player_1_turtle.ht()
+    player_1_turtle.goto((size_of_cell_x*num_rows) - (size_of_cell_x*num_rows)/3,-origin_y - size_of_cell_y)
+    
+    player_2_turtle = turtle.Turtle()
+    player_2_turtle.up()
+    player_2_turtle.ht()
+    player_2_turtle.goto((size_of_cell_x*num_rows) - (((size_of_cell_x*num_rows)/3)*2),-origin_y - size_of_cell_y)
+    
+    #clear turtle clears previous scores
+    clear = turtle.Turtle()
+    clear.speed(0)
+    clear.up()
+    clear.ht()
+    clear.goto(-300,-415)
+    clear.color('green')
+    clear.begin_fill()
+    
+    for i in range(2):
+        clear.forward(600)
+        clear.right(90)
+        clear.forward(30)
+        clear.right(90)
+
+    clear.end_fill()
     
     # Display running totals for initial configuration #
-    player_1_score.write('Player 1 has: ' + str(2) + ' Tiles', move=False, align="center", font=("Arial", 12, "bold"))
-    player_2_score.write('Player 2 has: ' + str(2) + ' Tiles', move=False, align="center", font=("Arial", 12, "bold"))
+    player_1_turtle.write('Player 1 has: ' + str(player_1_Score) + ' Tiles', move=False, align="center", font=("Arial", 12, "bold"))
+    player_2_turtle.write('Player 2 has: ' + str(player_2_Score) + ' Tiles', move=False, align="center", font=("Arial", 12, "bold"))
 
 # Define a function for drawing circles of x radius #
 def circle(turtle,radius):
     for i in range(36):
-        # Move by 1/360 circumference
-        turtle.forward((2*math.pi*radius/360)*10)
-        turtle.left(10)
-    return 
+       #Move by 1/360 circumference
+       turtle.forward((2*math.pi*radius/360)*(size_of_cell_x/10))
+       turtle.left(10)
+    return
 
 # Define a function for drawing pieces wherever a player chooses #
 def printTile(cell,pen_color,fill_color):
     # Pass the user input value into getCellCords in order to determine x/y coordinates for drawing a piece #
-    xcord = int(str.split(getCellCords(cell),',')[0]) + 46
-    ycord = int(str.split(getCellCords(cell),',')[1]) + 4
+    xcord = int(str.split(getCellCords(cell),',')[0]) - (size_of_cell_x/2) - 2
+    ycord = int(str.split(getCellCords(cell),',')[1]) + size_of_cell_y + 2
 #    state = fill_color
     
 #    updateCellState(cell,state)
@@ -231,53 +200,35 @@ def printTile(cell,pen_color,fill_color):
     return
 
 # This function creates the 2D list 'cells' which will be referenced later for drawing pieces when players make moves #
-def init_constants():
+def init_cells_array():
+    global origin_x
+    global origin_y
+    origin_x = ((size_of_cell_x*num_rows)/-2)
+    origin_y = ((size_of_cell_y*num_columns)/2)
+    
     # letter, number, xcord, ycord, state #
     # cells[0] = [['A',1,-400,400,empty/white/black]] #
 
-    # CITATION: line 229 was written via referencing this URL: http://stackoverflow.com/questions/16060899/alphabet-range-python #
-    letters = list(map(chr, range(ord('A'), ord('H')+1)))
-    
-    # Create a globally available 2D list containing information about all 64 grid locations #
-    global cells 
+    # CITATION: line 213 was written via referencing this URL: http://stackoverflow.com/questions/16060899/alphabet-range-python #
+    global alphabet
+    alphabet = list(map(chr, range(ord('A'), ord('Z')+1)))
+    letters = list(map(chr, range(ord(alphabet[0]), ord(alphabet[num_columns]))))
+
+    # Create a globally available 2D list containing information about all grid locations #
+    global cells
     cells = []
     for letters in letters:
        state = 'empty'
        # Assign xcoordinates according to column value #
        if letters == 'A':
-           xcord = -400
-       if letters == 'B':
-           xcord = -300
-       if letters == 'C':
-           xcord = -200
-       if letters == 'D':
-           xcord = -100
-       if letters == 'E':
-           xcord = 0
-       if letters == 'F':
-           xcord = 100
-       if letters == 'G':
-           xcord = 200
-       if letters == 'H':
-           xcord = 300
-       for i in range(1,9):
+           letter_int = 0
+       letter_int = letter_int + 1
+       xcord = int(origin_x+(size_of_cell_x*letter_int))
+       
+       for i in range(num_rows-1):
            # Assign ycoordinates according to row value #
-           if i == 1:
-               ycord = 300
-           if i == 2:
-               ycord = 200
-           if i == 3:
-               ycord = 100
-           if i == 4:
-               ycord = 0
-           if i == 5:
-               ycord = -100
-           if i == 6:
-               ycord = -200
-           if i == 7:
-               ycord = -300
-           if i == 8:
-               ycord = -400
+           i_int = i + 1
+           ycord = int(origin_y-(size_of_cell_y*i_int))
            cells.append([letters,i,xcord,ycord,state])
 
 # Define a function for determining x/y coordinates of a given grid location #
@@ -293,29 +244,52 @@ def updateCellState(cell,state):
             del cells[i][4]
             cells.insert([i],[state])
 
-# Display welcome screen, then initialize the board & all constants etc. #
-welcome()
-init_constants()
-init_board()
+def main():
+    # Define constants for drawing the board #
+    global num_rows
+    global num_columns
+    global size_of_cell_x
+    global size_of_cell_y
 
-# Prompt player 1 for a move #
-player_1_move = input('Player 1, you are Black, please enter the coordinates of your first move: ')
+    num_rows = 8
+    num_columns = 8
+    size_of_cell_x = 50
+    size_of_cell_y = 50
 
-# Echo player 1's move back via terminal #
-print('Player 1 played at: ' + player_1_move)
+    # Display welcome screen, then initialize the board & all constants etc. #
+    welcome()
+    init_cells_array()
+    init_board()
+    #Added by Victor
+    global player_1_Score
+    player_1_Score = 2
+    global player_2_Score
+    player_2_Score = 2
+    update_Scores(player_1_Score,player_2_Score)
+    
+    # Prompt player 1 for a move #
+    player_1_move = input('Player 1, you are Black, please enter the coordinates of your first move: ')
 
-# Draw a piece wherever player 1 picked #
-printTile(player_1_move,'white','black')
+    # Echo player 1's move back via terminal #
+    print('Player 1 played at: ' + player_1_move)
 
-# Temporary code block to accomplish Task #2
-if player_1_move == 'C5':
-    printTile('D5','white','black')
-if player_1_move == 'D6':
-    printTile('D5','white','black')
-if player_1_move == 'F4':
-    printTile('E4','white','black')
-if player_1_move == 'E3':
-    printTile('E4','white','black')
+    # Draw a piece wherever player 1 picked #
+    printTile(player_1_move,'white','black')
 
-# prompt player 2 to move simply to keep the turtle window open... #
-player_2_move = input('Player 2, you are White, please enter the coordinates of your first move: ')
+    # Temporary code block to accomplish Task #2
+    if player_1_move == 'C5':
+        printTile('D5','white','black')
+    if player_1_move == 'D6':
+        printTile('D5','white','black')
+    if player_1_move == 'F4':
+        printTile('E4','white','black')
+    if player_1_move == 'E3':
+        printTile('E4','white','black')
+
+    player_1_Score += 2
+    player_2_Score += 2
+    update_Scores(player_1_Score, player_2_Score)
+    # prompt player 2 to move simply to keep the turtle window open... #
+    player_2_move = input('Player 2, you are White, please enter the coordinates of your first move: ')
+
+main()
